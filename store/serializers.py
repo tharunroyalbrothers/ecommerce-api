@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import User, Product, CartItem, Order, OrderItem
 from django.contrib.auth.password_validation import validate_password
 import re
-from django.utils.timezone import localtime
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,21 +36,21 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Username already exists")
         return username
 
-    def validate_password(self, password):
-        password = password.strip()
-        if not password:
-            raise serializers.ValidationError("Password can't be empty")
-        if len(password) < 8:
-            raise serializers.ValidationError("Password must be at least 8 characters long")
-        if not re.search(r"[A-Z]", password):
-            raise serializers.ValidationError("Password must contain at least one uppercase letter")
-        if not re.search(r"[a-z]", password):
-            raise serializers.ValidationError("Password must contain at least one lowercase letter")
-        if not re.search(r"\d", password):
-            raise serializers.ValidationError("Password must contain at least one digit")
-        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
-            raise serializers.ValidationError("Password must contain at least one special character")
-        return password
+    # def validate_password(self, password):
+    #     password = password.strip()
+    #     if not password:
+    #         raise serializers.ValidationError("Password can't be empty")
+    #     if len(password) < 8:
+    #         raise serializers.ValidationError("Password must be at least 8 characters long")
+    #     if not re.search(r"[A-Z]", password):
+    #         raise serializers.ValidationError("Password must contain at least one uppercase letter")
+    #     if not re.search(r"[a-z]", password):
+    #         raise serializers.ValidationError("Password must contain at least one lowercase letter")
+    #     if not re.search(r"\d", password):
+    #         raise serializers.ValidationError("Password must contain at least one digit")
+    #     if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+    #         raise serializers.ValidationError("Password must contain at least one special character")
+    #     return password
 
     def validate_email(self, email):
         email = email.strip().lower()
